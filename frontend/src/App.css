@@ -1,0 +1,30 @@
+/* write your css here */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+html,body{
+    overflow-x: hidden;
+}
+.homepage_bg{
+    background: url("../src/assets/imgvideo/Images/bghome.svg");
+}
+.loader {
+    width: 48px;
+    height: 48px;
+    border: 5px solid #FFF;
+    border-bottom-color: transparent;
+    border-radius: 50%;
+    display: inline-block;
+    box-sizing: border-box;
+    animation: rotation 1s linear infinite;
+}
+
+@keyframes rotation {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
+}
