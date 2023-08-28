@@ -5,6 +5,8 @@ import Bannerimage3 from "../assets/imgvideo/Images/aboutus3.webp"
 import foundingstory from "../assets/imgvideo/Images/FoundingStory.png"
 import Quote from "../components/core/About/Quote"
 import Stats from "../components/core/About/Stats"
+import Footer from "../components/common/Footer"
+import ContactFormSection from "../components/core/About/ContactFormSection"
 const About = () => {
     return ( 
         <div className="text-richblack-5 w-11/12 mx-auto my-20 ">
@@ -79,6 +81,13 @@ const About = () => {
             <section>
                 <Stats/>
             </section>
+            <section className="mx-auto flex flex-col items-center justify-between gap-5 mb-[140px] ">
+            <ContactFormSection/>
+            </section>
+            <div className="text-4xl text-center my-12">
+                Reviews from Learners
+            </div>
+            <Footer/>
         </div>
      );
 }
