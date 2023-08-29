@@ -1,5 +1,5 @@
 // import { useEffect} from "react"
-import { useState } from "react";
+import { useState,useEffect } from "react";
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
 import OTPInput from "react-otp-input"
@@ -12,11 +12,13 @@ const VerifyEmail  = ()=>{
     const navigate = useNavigate()
     const dispatch = useDispatch();
     const {loading,signupData}= useSelector((state)=>state.auth)
-    // useEffect(()=>{
-    //     if(!signupData){
-    //         navigate("/signup");
-    //     }
-    // },[])
+    console.log( "signupdata ->",signupData);
+    useEffect(()=>{
+        if(!signupData){
+            navigate("/signup");
+        }
+         // eslint-disable-next-line react-hooks/exhaustive-deps
+    },[])
     const verifyhandler = (e)=>{
         e.preventDefault();
         const {
@@ -26,8 +28,7 @@ const VerifyEmail  = ()=>{
                 email,
                 password,
                 confirmPassword,
-                otp,
-                }= signupData
+                       }= signupData
         dispatch(signUp(accountType,
                         firstName,
                         lastName,

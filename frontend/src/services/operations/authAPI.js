@@ -1,5 +1,5 @@
 import { toast } from "react-hot-toast"
-
+// import axios from "axios"
 import { setLoading, setToken } from "../../Slices/authSlice"
 import { resetCart } from "../../Slices/cartSlice"
 import { setUser } from "../../Slices/profileSlice"
@@ -43,28 +43,54 @@ export function sendOtp(email, navigate) {
 }
 
 export function signUp(
-  accountType,
-  firstName,
-  lastName,
-  email,
-  password,
-  confirmPassword,
-  otp,
-  navigate
+                      accountType,
+                        firstName,
+                        lastName,
+                        email,
+                        password,
+                        confirmPassword,
+                        otp,
+                        navigate
 ) {
   return async (dispatch) => {
     const toastId = toast.loading("Loading...")
     dispatch(setLoading(true))
-    try {
+    console.log(accountType,
+                        firstName,
+                        lastName,
+                        email,
+                        password,
+                        confirmPassword,
+                        otp,
+                        navigate);
+      if(!otp){
+          console.log("otp not found");
+      }
+      if(!firstName){
+        console.log("firstname not found");
+      }
+      if(!accountType){
+        console.log("accounttype not found");
+      }
+try {
       const response = await apiConnector("POST", SIGNUP_API, {
-        accountType,
-        firstName,
-        lastName,
-        email,
-        password,
-        confirmPassword,
-        otp,
+        accountType:accountType,
+        firstName:firstName,
+        lastName:lastName,
+        email:email,
+        password:password,
+        confirmPassword:confirmPassword,
+        otp:otp,
       })
+      // const response = await axios.post(SIGNUP_API,{
+      //    accountType,
+      //    firstName,
+      //    lastName,
+      //    email,
+      //    password,
+      //    confirmPassword,
+      //    otp,
+      // })
 
       console.log("SIGNUP API RESPONSE............", response)
 

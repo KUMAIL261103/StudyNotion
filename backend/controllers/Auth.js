@@ -50,6 +50,7 @@ exports.sendOtp = async(req,res)=>{
     res.status(200).json({
         success:true,
         message:"Otp sent successfully",
+        otp,
     })
 
    }catch(error){
@@ -75,12 +76,18 @@ try{
         
         otp}=req.body;
     //validate the user
-    if(!firstName || !lastName || !email || !password || !confirmpassword
-        || !otp ){
-            return res.status(404).json({
+    if(!firstName || !lastName || !email || !password || !confirmpassword){
+         return res.status(404).json({
                 success:false,
-                message:"All fields is required",
+                message:"All fields is required !!!!this is issue  ",
             })
+    }
+    if( !otp ){
+             return res.status(404).json({
+                success:false,
+                message:"OTP is required !!!!this is issue  ",
+            })
+           
         }
     // confirm password matching
     if(password !== confirmpassword){
@@ -132,6 +139,8 @@ try{
     //Hash the password
     const hashedPassword = await bcrypt.hash(password,10);
     //entry in the db
+    let approved = "";
+	approved === "Instructor" ? (approved = false) : (approved = true);
     const ProfileDetails = await Profile.create({
         gender:null,
         dateOfBirth:null,
@@ -145,6 +154,7 @@ try{
         email:email,
         password:hashedPassword,
         accountType:accountType,
+        approved:approved,
         additionalDetails:ProfileDetails._id,
         image:`https://api.dicebear.com/5.x/initials/svg?seed=${firstName} ${lastName}`,
 

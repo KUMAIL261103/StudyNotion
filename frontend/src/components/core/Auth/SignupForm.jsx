@@ -47,7 +47,7 @@ function SignupForm() {
     }
     const signupData = {
       ...formData,
-      accountType,
+      accountType:accountType,
     }
 
     // Setting signup data to state
