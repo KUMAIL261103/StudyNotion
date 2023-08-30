@@ -3,7 +3,7 @@ import { toast } from "react-hot-toast"
 import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai"
 import { useDispatch } from "react-redux"
 import { useNavigate } from "react-router-dom"
-
+import { setUser } from "../../../Slices/profileSlice"
 import { sendOtp } from "../../../services/operations/authAPI"
 import { setSignupData } from "../../../Slices/authSlice"
 import { ACCOUNT_TYPE } from "../../../utils/constants"
@@ -49,6 +49,7 @@ function SignupForm() {
       ...formData,
       accountType:accountType,
     }
+    // dispatch(setUser({accountType:accountType}));
 
     // Setting signup data to state
     // To be used after otp verification
