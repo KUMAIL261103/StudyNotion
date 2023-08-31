@@ -13,6 +13,9 @@ import About from "./pages/about";
 import PrivateRoute from "./components/core/Auth/PrivateRoute";
 import MyProfile from "./components/core/Dashboard/MyProfile";
 import Error from "./pages/Error";
+import Contact from "./pages/Contact";
+import Cart from "./components/core/Dashboard/Cart/index";  
+import EnrolledCourses from "./components/core/Dashboard/EnrolledCourses";
 function App() {
   return (
     
@@ -21,7 +24,7 @@ function App() {
       <Routes>
         <Route path="/" element={<Home/>}/>
        
-        <Route path="/contact" element={<div className="text-white">Contact</div>}/>
+        
         <Route path="/login" element=
         {<OpenRoute>
         <Login/>
@@ -52,7 +55,10 @@ function App() {
               <Dashboard/>
               </PrivateRoute>}>
               <Route path="/dashboard/my-profile" element={<MyProfile/>}/>
+              <Route path="/dashboard/enrolled-courses" element={<EnrolledCourses/>}/>
+              <Route path="/dashboard/cart" element={<Cart/>}/>
           </Route>
+          <Route path="/contact" element={<Contact/>}/>
               <Route path="*" element={<Error/>}/>
       </Routes>
     </div>

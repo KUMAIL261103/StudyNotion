@@ -9,7 +9,7 @@ import { VscSignOut } from "react-icons/vsc"
 import ConfirmationModal from "../../common/Confirmationmodal"
 const Sidebar = () => {
     const {user} = useSelector((state)=>state.profile)
-    console.log("user wala hai yeh ",user);
+    
     const {loading:profileloading} = useSelector((state)=>state.profile);
     const {loading:authloading} = useSelector((state)=>state.auth);
     const dispatch = useDispatch()
@@ -22,11 +22,11 @@ const Sidebar = () => {
             </div>)
     }else{
             return ( 
-            <div className="">
-                <div className="flex min-w-[220px] flex-col border-r-[1px]-richblack-700
+            <div>
+                <div className="flex min-w-[220px] flex-col border-r-[1px]-richblack-800 rounded-md
                     h-[calc(100vh-3.5rem)] bg-richblack-800 py-10">
                     
-                        <div className="flex flex-col ">
+                        <div className="flex flex-col gap-y-2">
                             {sidebarLinks.map((link)=>{
                                 
                                 
@@ -39,7 +39,7 @@ const Sidebar = () => {
                             })}
 
                         </div>
-                            <div className="mx-auto mt-6 mb-6 h-[1px] w-10/12 bg-richblack-600"></div>
+                            <div className="mx-auto mt-6 mb-6 h-[1px] rounded-md w-10/12 bg-richblack-600"></div>
                             <div className="flex flex-col">
                                     <Sidebarlinks link={{name:"Settings",path:"/dashboard/settings"}} iconName="VscSettingsGear"/>
                                     <button onClick={()=>
@@ -52,7 +52,7 @@ const Sidebar = () => {
                                         btn2Handler :()=>setconfirmModal(null)
                                         })
                                         }
-                                        className="text-sm item font-medium text-richblack-300">
+                                        className="text-sm item font-medium text-richblack-100">
                                             <div className="flex -translate-x-10  my-4 justify-center items-center gap-x-2">
                                                 <VscSignOut className="text-lg"/>
                                                 <span>Logout</span>

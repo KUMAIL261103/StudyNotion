@@ -17,8 +17,8 @@ const Dashboard = () => {
         return ( 
             <div className="relative flex gap-x-10 min-h-[calc(100vh-3.5rem)] w-full">
                 <Sidebar/>
-                <div className="h-[calc(100vh-3.5rem)] overflow-auto">
-                    <div className="mx-auto w-full  bg-richblack-800 min-w-[1000px] max-w-full py-10">
+                <div className="h-[calc(100vh-3.5rem)] overflow-auto w-full">
+                    <div className="mx-auto w-full  bg-richblack-800 min-w-[1000px] max-w-full rounded-md py-10">
                     <Outlet/>
                     </div>
                 </div>

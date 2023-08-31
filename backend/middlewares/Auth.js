@@ -6,7 +6,7 @@ require("dotenv").config();
 exports.auth = async(req,res,next)=>{
     try{
         //extract token
-        const  token = req.cookies.token || req.body.token || req.header("Authorisation").replace("Bearer ","");
+        const  token = req.cookies.token || req.body.token || req.header("Authorization").replace("Bearer ","");
         if(!token){
             return res.status(401).json({
                 success:false,
@@ -30,7 +30,7 @@ exports.auth = async(req,res,next)=>{
     }catch(error){
         res.status(401).json({
             success:false,
-            message:"Something went wrong while validatinf jwt"
+            message:"Something went wrong while validating jwt"
         });
 
     }

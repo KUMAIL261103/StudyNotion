@@ -60,7 +60,7 @@ const ContactUsForm = () => {
                         {...register("firstname",{required:true})}/>
                         {
                             errors.firstname && (
-                                <span className="text-pink-400">
+                                <span className="text-pink-400 font-semibold">
                                     *Please enter Your name
                                 </span>
                             )
@@ -88,7 +88,7 @@ const ContactUsForm = () => {
                     {...register("email",{required:true})}/>
                     {
                         errors.email && (
-                            <span className="text-pink-400">
+                            <span className="text-pink-400 font-semibold">
                                 *Please enter Your Email Address
                             </span>
                         )
@@ -128,7 +128,7 @@ const ContactUsForm = () => {
                                     minLength:{value:8,message:"invalid Phonenumber"},})}
                                 />
                                 {errors.phoneNo && (
-                                    <span className="text-pink-300">*{errors.phoneNo.message}</span>
+                                    <span className="text-pink-300 font-semibold">*{errors.phoneNo.message}</span>
                                 )}
                         
 
@@ -148,8 +148,8 @@ const ContactUsForm = () => {
                     </textarea>
                     {
                             errors.message && (
-                                <span>
-                                    Please enter Your Message 
+                                <span className="font-semibold text-pink-300">
+                                    *Please enter Your Message 
                                 </span>
                             )
                         }

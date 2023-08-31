@@ -13,7 +13,7 @@ const Iconbutton = ({
             <span>{text}</span>
             {children}
             </>
-        ):(<></>)}
+        ):({text})}
     </button> );
 }
  

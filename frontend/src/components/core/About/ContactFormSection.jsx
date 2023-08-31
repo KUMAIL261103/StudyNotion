@@ -1,7 +1,7 @@
 import ContactUsForm from "../../common/ContactUsForm";
 const ContactFormSection = () => {
     return ( 
-        <div className="mx-auto bg-richblack-600 rounded-xl py-6 flex flex-col gap-2 w-4/12 mt-28">
+        <div className="mx-auto bg-richblack-600 rounded-xl py-6 flex flex-col gap-2 w-7/12 mt-20">
             <h1 className="text-center text-3xl font-inter">
                 Get in Touch!!
             </h1>
