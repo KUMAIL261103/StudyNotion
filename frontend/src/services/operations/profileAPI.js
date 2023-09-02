@@ -1,7 +1,7 @@
 import { apiConnector } from "../apiconnector";
 import {profileEndpoints} from "../apis";
 import { toast } from "react-hot-toast";
-import { setLoading } from "../../Slices/profileSlice";
+import setLoading  from "../../slices/profileSlice";
 export async function getenrolledcourses(token){
     
         const toastId = toast.loading("Loading...");

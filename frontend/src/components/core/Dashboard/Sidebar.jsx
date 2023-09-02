@@ -22,9 +22,9 @@ const Sidebar = () => {
             </div>)
     }else{
             return ( 
-            <div>
-                <div className="flex min-w-[220px] flex-col border-r-[1px]-richblack-800 rounded-md
-                    h-[calc(100vh-3.5rem)] bg-richblack-800 py-10">
+            <div className="relative">
+                <div className="flex lg:min-w-[220px] flex-col border-r-[1px]-richblack-800 rounded-md
+                    h-[calc(100vh-3.5rem)] bg-richblack-800 py-10 sm:min-w-[110px]">
                     
                         <div className="flex flex-col gap-y-2">
                             {sidebarLinks.map((link)=>{
@@ -43,14 +43,17 @@ const Sidebar = () => {
                             <div className="flex flex-col">
                                     <Sidebarlinks link={{name:"Settings",path:"/dashboard/settings"}} iconName="VscSettingsGear"/>
                                     <button onClick={()=>
-                                        setconfirmModal({
-                                        text1: "Are You Sure?",
-                                        text2:" You  will be Logged out",
-                                        btn1Text: "Logout",
-                                        btn2Text: "Cancel",
-                                        btn1Handler :()=> dispatch(logout(navigate)),
-                                        btn2Handler :()=>setconfirmModal(null)
-                                        })
+                                        {
+                                        // setconfirmModal({
+                                        // text1: "Are You Sure?",
+                                        // text2:" You  will be Logged out",
+                                        // btn1Text: "Logout",
+                                        // btn2Text: "Cancel",
+                                        // btn1Handler :()=> dispatch(logout(navigate)),
+                                        // btn2Handler :()=>setconfirmModal(null)
+                                        // })
+                                        dispatch(logout(navigate))
+                                        console.log("logout")}
                                         }
                                         className="text-sm item font-medium text-richblack-100">
                                             <div className="flex -translate-x-10  my-4 justify-center items-center gap-x-2">
@@ -61,7 +64,9 @@ const Sidebar = () => {
                             
                             </div>
                 </div>
-                {confirmModal && <ConfirmationModal modalData={confirmModal}/>}
+                {/* {
+                (confirmModal )?
+                (<ConfirmationModal modalData={confirmModal}/>):<></>} */}
             </div> );
 
     }

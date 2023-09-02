@@ -1,11 +1,11 @@
 import { useSelector } from "react-redux";
 
 const RenderTotalAmount = () => {
+    const {total,cart} = useSelector((state)=>state.cart);
     const handleBuyCourse = ()=>{
-        // const course = cart.map((course)=>course._id));
-        console.log("buy course");
+        const course = cart.map((course)=>course._id);
+        console.log("buy course",course);
     }
-    const {total} = useSelector((state)=>state.cart.totalItems);
     return ( 
     <div>
         <p>Total</p>

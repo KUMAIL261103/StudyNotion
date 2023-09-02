@@ -3,7 +3,7 @@ import {RiDeleteBin6Line} from "react-icons/ri";
 import { BiSolidStar, BiSolidStarHalf } from "react-icons/bi";
 import ReactStars from "react-rating-stars-component";
 import { useSelector } from "react-redux";
-import { removeFromCart } from "../../../../Slices/cartSlice";
+import { removeFromCart } from "../../../../slices/cartSlice";
 import { useDispatch } from "react-redux";
 const RenderCartItems = () => {
     const dispatch = useDispatch();

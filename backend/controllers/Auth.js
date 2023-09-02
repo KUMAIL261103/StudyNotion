@@ -246,20 +246,16 @@ exports.login = async (req, res) => {
 exports.changePassword = async (req, res) => {
     //get data from req body
     //get oldpassword,newpassword,confirmpassword
-    const { password, email, newpassword, confirmpassword } = req.body;
+    const { password,  newpassword} = req.body;
+    const {email}=req.user.body;
     //validation
-    if (!password || !newpassword || !confirmpassword || !email) {
+    if (!password || !newpassword || !email) {
         return res.status(401).json({
             success: false,
             message: "All field are not filled",
         });
     }
-    if (confirmpassword !== newpassword) {
-        return res.status(401).json({
-            success: false,
-            message: "Confirmpassword is not matching",
-        });
-    }
+    
     //update newpassword
     try {
         const verifyuser = await User.findOne({ email: email });
