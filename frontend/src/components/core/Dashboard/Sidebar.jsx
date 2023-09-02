@@ -4,9 +4,9 @@ import {useDispatch, useSelector} from "react-redux"
 import Sidebarlinks from "./Sidebarlinks"
 import Spinner from "../../common/Spinner"
 import { useNavigate } from "react-router-dom"
-import { useState } from "react"
+// import { useState } from "react"
 import { VscSignOut } from "react-icons/vsc"
-import ConfirmationModal from "../../common/Confirmationmodal"
+// import ConfirmationModal from "../../common/Confirmationmodal"
 const Sidebar = () => {
     const {user} = useSelector((state)=>state.profile)
     
@@ -14,7 +14,7 @@ const Sidebar = () => {
     const {loading:authloading} = useSelector((state)=>state.auth);
     const dispatch = useDispatch()
     const navigate = useNavigate()
-    const [confirmModal,setconfirmModal] = useState(null);
+    // const [confirmModal,setconfirmModal] = useState(null);
     if(authloading || profileloading){
         return (
             <div className="mt-10">

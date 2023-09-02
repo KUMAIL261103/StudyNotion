@@ -4,7 +4,7 @@ const otpgenerator = require("otp-generator");
 const bcrypt = require("bcrypt");
 const Profile = require("../models/Profile");
 const jwt = require("jsonwebtoken");
-const { passwordUpdated } = "../mails/passwordUpdate.js";
+const { passwordUpdated } = require("../mails/passwordUpdate.js");
 const mailSender = require("../utils/mailSender");
 require("dotenv").config();
 //send otp
@@ -246,8 +246,9 @@ exports.login = async (req, res) => {
 exports.changePassword = async (req, res) => {
     //get data from req body
     //get oldpassword,newpassword,confirmpassword
+    console.log("user is this-->",req.user);
     const { password,  newpassword} = req.body;
-    const {email}=req.user.body;
+    const {email}=req.user;
     //validation
     if (!password || !newpassword || !email) {
         return res.status(401).json({
@@ -269,12 +270,14 @@ exports.changePassword = async (req, res) => {
             verifyuser.password = await bcrypt.hash(newpassword, 10);
             await verifyuser.save();
         }
-        //send mail
+    //     //send mail
+        const emailbody = passwordUpdated(email, verifyuser.firstName);
+        console.log(emailbody);
         try {
             const mailresponse = await mailSender(
                 email,
                 "Changed Password Email from Study Notion",
-                passwordUpdated(email, verifyuser.firstName)
+                emailbody
             );
             console.log("Email sent successfully", mailresponse);
         } catch (err) {
@@ -287,7 +290,7 @@ exports.changePassword = async (req, res) => {
         //return response
         return res.status(200).json({
             success: true,
-            message: displaymessage,
+            message: "Password changed successfully",
         });
     } catch (error) {
         console.log("Error occurred while changing password:", error);
