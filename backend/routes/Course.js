@@ -58,7 +58,7 @@ router.post("/createSection",auth,isInstructor,createSection);
 
 //category routes
 
-router.get("/getAllCategorys",getAllCategorys);
+router.get("/getAllCategories",getAllCategorys);
 router.get("/getcategorydetails",getcategorydetails);
 router.post("/createCategory",auth,isAdmin,createCategory);
 

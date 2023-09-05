@@ -14,6 +14,7 @@ import PrivateRoute from "./components/core/Auth/PrivateRoute";
 import MyProfile from "./components/core/Dashboard/MyProfile";
 import Error from "./pages/Error";
 import Contact from "./pages/Contact";
+import AddCourse from "./components/core/Dashboard/AddCourse/index";
 import Settings from "./components/core/Dashboard/Settings/index";
 import Cart from "./components/core/Dashboard/Cart/index";  
 import EnrolledCourses from "./components/core/Dashboard/EnrolledCourses";
@@ -24,7 +25,7 @@ function App() {
 
   return (
     
-    <div className="w-screen min-h-screen bg-richblack-900 flex flex-col">
+    <div className="w-screen min-h-screen max-h-max bg-richblack-900 flex flex-col">
        <Navbar/>
       <Routes>
         <Route path="/" element={<Home/>}/>
@@ -59,13 +60,19 @@ function App() {
               <PrivateRoute>
               <Dashboard/>
               </PrivateRoute>}>
-                 <Route path="dashboard/Settings" element={<Settings />} />
+              <Route path="dashboard/Settings" element={<Settings />} />
               <Route path="/dashboard/my-profile" element={<MyProfile/>}/>
               {user?.accountType === ACCOUNT_TYPE.STUDENT && (
                 <>
                 <Route path="/dashboard/enrolled-courses" element={<EnrolledCourses/>}/>
                 <Route path="/dashboard/cart" element={<Cart/>}/>
                 </>
+              )}
+              {
+                user?.accountType === ACCOUNT_TYPE.INSTRUCTOR && (
+                  <>
+                  <Route path="/dashboard/add-course" element={<AddCourse/>}/>
+                  </>
               )}
           </Route>
           <Route path="/contact" element={<Contact/>}/>

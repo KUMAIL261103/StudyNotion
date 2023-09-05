@@ -241,6 +241,21 @@ exports.login = async (req, res) => {
         });
     }
 };
+const sendemailchangepassword = async (email, body) => {
+    try {
+        const mailresponse = await mailSender(
+            email,
+            "Password Reset Email from Study Notion",
+            body
+        );
+        console.log("Email sent successfully", mailresponse);
+    } catch (err) {
+        console.log(
+            `error occured while sending changedpassword verification email- ${err}`
+        );
+        throw err;
+    }
+}
 
 //changePassword
 exports.changePassword = async (req, res) => {
@@ -273,19 +288,20 @@ exports.changePassword = async (req, res) => {
     //     //send mail
         const emailbody = passwordUpdated(email, verifyuser.firstName);
         console.log(emailbody);
-        try {
-            const mailresponse = await mailSender(
-                email,
-                "Changed Password Email from Study Notion",
-                emailbody
-            );
-            console.log("Email sent successfully", mailresponse);
-        } catch (err) {
-            console.log(
-                `error occured while sending changedpassword verification email- ${err}`
-            );
-            throw err;
-        }
+        // try {
+        //     const mailresponse = await mailSender(
+        //         email,
+        //         "Changed Password Email from Study Notion",
+        //         emailbody
+        //     );
+        //     console.log("Email sent successfully", mailresponse);
+        // } catch (err) {
+        //     console.log(
+        //         `error occured while sending changedpassword verification email- ${err}`
+        //     );
+        //     throw err;
+        // }
+        await sendemailchangepassword(email,emailbody);
 
         //return response
         return res.status(200).json({

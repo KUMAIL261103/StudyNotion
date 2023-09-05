@@ -22,9 +22,9 @@ const Sidebar = () => {
             </div>)
     }else{
             return ( 
-            <div className="relative">
+            <div className="relative ">
                 <div className="flex lg:min-w-[220px] flex-col border-r-[1px]-richblack-800 rounded-md
-                    h-[calc(100vh-3.5rem)] bg-richblack-800 py-10 sm:min-w-[110px]">
+                     min-h-[calc(100vh-3.5rem)] h-fit bg-richblack-800 py-10 sm:min-w-[110px]">
                     
                         <div className="flex flex-col gap-y-2">
                             {sidebarLinks.map((link)=>{

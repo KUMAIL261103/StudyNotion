@@ -27,7 +27,7 @@ const EnrolledCourses = () => {
         
         getenrolledCourses();
         // eslint-disable-next-line
-    },[])
+    },[token])
     return ( 
     <div >
         <div>Enrolled Courses</div>

@@ -74,8 +74,9 @@ exports.updateProfile = async(req,res)=>{
 exports.deleteAccount = async(req,res)=>{
     try{
     //get userid
+    
     const userid = req.user.id;
-    const existUser = await User.findById(userid);
+    const existUser = await User.findOne({_id:userid});
     if(!existUser){
              return res.status(404).json({
                 success:false,
@@ -107,7 +108,7 @@ exports.deleteAccount = async(req,res)=>{
         return res.status(200).json({
             success:true,
             message:"Profile & Userdeleted",
-            updateProfile,
+            
         })}
         catch(error){
              console.log(error);
@@ -173,9 +174,9 @@ exports.getEnrolledCourses = async (req, res) => {
       const userId = req.user.id
       const userDetails = await User.findOne({
         _id: userId,
-      })
-        .populate("courses")
+      }).populate("courses")
         .exec()
+      console.log(userDetails);  
       if (!userDetails) {
         return res.status(400).json({
           success: false,
