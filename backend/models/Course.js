@@ -2,11 +2,11 @@ const mongoose = require('mongoose');
 const CourseSchema = new mongoose.Schema({
     courseName:{
         type:String,
-        trim:true,
+        
     },
     courseDescription:{
         type:String,
-        trim:true,
+        
     },
     instructor:{
         type:mongoose.Schema.Types.ObjectId,
@@ -36,6 +36,9 @@ const CourseSchema = new mongoose.Schema({
     thumbnail:{
         type:String,
     },
+    instructions:[{
+        type:[String],
+    }],
     Category:{
         type:mongoose.Schema.Types.ObjectId,
         ref:"Category",
@@ -45,7 +48,7 @@ const CourseSchema = new mongoose.Schema({
     },
     studentEnrolled:[{
         type:mongoose.Schema.Types.ObjectId,
-        required:true,
+        // required:true,
         ref:"User",
     }],
     status:{

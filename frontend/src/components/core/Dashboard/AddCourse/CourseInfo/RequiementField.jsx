@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-const RequirementField = ({name,label,register,errors,setValue,getValue}) => {
+const RequirementField = ({name,label,reset,issubmitted,setissubmitted,register,errors,setValue,getValue}) => {
     const [requirements,setRequirements] = useState([]);
     const [requirementList,setRequirementList] = useState([]);
     const handleaddRequirement = (e) => {
@@ -9,6 +9,10 @@ const RequirementField = ({name,label,register,errors,setValue,getValue}) => {
             setRequirements("");
         }
     }
+    if(issubmitted){
+        setRequirementList([]);
+        setissubmitted(false);
+    }
     const handleremoveRequirement = (index) => {
        
         const updatedList = [...requirementList];
@@ -17,9 +21,9 @@ const RequirementField = ({name,label,register,errors,setValue,getValue}) => {
 
     }
     useEffect(() => {
-        setValue(name,requirementList);
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [requirementList])
+        setValue(name,requirementList); 
+        // eslint-disable-next-line react-hooks/exhaustive-deps 
+    },[requirementList])
     useEffect(()=>{
         register(name,
             {required:true,
@@ -43,23 +47,23 @@ const RequirementField = ({name,label,register,errors,setValue,getValue}) => {
                 className="w-full rounded-md border-richblack-700 bg-richblack-700 p-2 text-richblack-50"
                />
                <button onClick={handleaddRequirement} className="text-center px-5 py-1 text-[16px] rounded-md font-bold
-                bg-yellow-50 text-black ">Add</button>
+                bg-yellow-50 text-black mt-3 ">Add</button>
 
         </div>
+        <ul >
         {
             requirementList.length>0 && requirementList.map((item,index) => {
                 return(
-                    <ul>
                     <li key={index} className="flex flex-col gap-4 mt-4 ">
                         <p>{item}</p>
                         <button onClick={() => handleremoveRequirement(index)} className="text-center px-5 py-1 w-[6rem] text-[16px] rounded-md font-bold
                          bg-yellow-50 text-black ">Remove</button>
 
                     </li>
-                    </ul>
                 )
             })
         }
+            </ul>
         {
             errors[name] && <p className="text-yellow-25">{label} is required</p>
         }

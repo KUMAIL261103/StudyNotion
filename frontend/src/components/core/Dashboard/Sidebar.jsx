@@ -4,9 +4,9 @@ import {useDispatch, useSelector} from "react-redux"
 import Sidebarlinks from "./Sidebarlinks"
 import Spinner from "../../common/Spinner"
 import { useNavigate } from "react-router-dom"
-// import { useState } from "react"
+ import { useState } from "react"
 import { VscSignOut } from "react-icons/vsc"
-// import ConfirmationModal from "../../common/Confirmationmodal"
+import ConfirmationModal from "../../common/Confirmationmodal"
 const Sidebar = () => {
     const {user} = useSelector((state)=>state.profile)
     
@@ -14,7 +14,7 @@ const Sidebar = () => {
     const {loading:authloading} = useSelector((state)=>state.auth);
     const dispatch = useDispatch()
     const navigate = useNavigate()
-    // const [confirmModal,setconfirmModal] = useState(null);
+    const [confirmationModal,setConfirmationModal] = useState(null);
     if(authloading || profileloading){
         return (
             <div className="mt-10">
@@ -42,18 +42,16 @@ const Sidebar = () => {
                             <div className="mx-auto mt-6 mb-6 h-[1px] rounded-md w-10/12 bg-richblack-600"></div>
                             <div className="flex flex-col">
                                     <Sidebarlinks link={{name:"Settings",path:"/dashboard/settings"}} iconName="VscSettingsGear"/>
-                                    <button onClick={()=>
-                                        {
-                                        // setconfirmModal({
-                                        // text1: "Are You Sure?",
-                                        // text2:" You  will be Logged out",
-                                        // btn1Text: "Logout",
-                                        // btn2Text: "Cancel",
-                                        // btn1Handler :()=> dispatch(logout(navigate)),
-                                        // btn2Handler :()=>setconfirmModal(null)
-                                        // })
-                                        dispatch(logout(navigate))
-                                        console.log("logout")}
+                                    <button 
+                                        onClick={() =>
+                                                setConfirmationModal({
+                                                    text1: "Are you sure?",
+                                                    text2: "You will be logged out of your account.",
+                                                    btn1Text: "Logout",
+                                                    btn2Text: "Cancel",
+                                                    btn1Handler: () => dispatch(logout(navigate)),
+                                                    btn2Handler: () => setConfirmationModal(null),
+                                                })
                                         }
                                         className="text-sm item font-medium text-richblack-100">
                                             <div className="flex -translate-x-10  my-4 justify-center items-center gap-x-2">
@@ -64,10 +62,8 @@ const Sidebar = () => {
                             
                             </div>
                 </div>
-                {/* {
-                (confirmModal )?
-                (<ConfirmationModal modalData={confirmModal}/>):<></>} */}
-            </div> );
+                {confirmationModal && <ConfirmationModal modalData={confirmationModal} />}
+       </div> );
 
     }
 }

@@ -7,12 +7,26 @@ require("dotenv").config();
 exports.createCourse = async(req,res)=>{
     try{
         //fetch all data
-        const {courseName,courseDescription,whatYouWillLearn,price,Category} =req.body;
+        let{courseName,
+            courseDescription,
+            whatYouWillLearn,
+            price,
+            instructions,
+            category,
+            //tags
+        } =req.body;
         let {status}=req.body;
         //get thumbnail
-        const thumbnail = req.files.thumbnailImage;
+        //const thumbnail = req.files.thumbnailImage;
         //validation
-        if(!courseName || !courseDescription || !thumbnail  || !whatYouWillLearn || !price || !Category){
+        // if(!thumbnail){
+        //     return res.status(401).json({
+        //         success:false,
+        //         message:"thumbnail is required",
+        //     })
+        // }
+         if(!courseName || !courseDescription   
+             || !whatYouWillLearn || !price || !category){
             return res.status(401).json({
                 success:false,
                 message:"All fields are requierd",
@@ -22,8 +36,9 @@ exports.createCourse = async(req,res)=>{
 			status = "Draft";
 		}
         //check for instructor
+        // console.log(req.user.id);
         const userId = req.user.id;
-        const instructorDetails = await User.findById({userId},
+        const instructorDetails = await User.findOne({_id : userId},
             {
             accountType:"Instructor",
             });
@@ -34,15 +49,15 @@ exports.createCourse = async(req,res)=>{
                 })
         }
         //Category validation
-        const CategoryDetails = await Category.findById({Category});
-        if(!CategoryDetails){
-                return res.status(404).json({
-                    success:false,
-                    message:"Category not found"
-                })
-        }
+        // const CategoryDetails = await Category.findById({_id : Categoryid});
+        // if(!CategoryDetails){
+        //         return res.status(404).json({
+        //             success:false,
+        //             message:"Category not found"
+        //         })
+        // }
         //Upload Image to Cloudinary
-        const thumbnailImage = await uploadFileToCloudinary(thumbnail,process.env.FOLDER_NAME);
+        //const thumbnailImage = await uploadFileToCloudinary(thumbnail,process.env.FOLDER_NAME);
         //create an entry for new course
         const newCourse  = await Course.create({
             courseName,
@@ -50,11 +65,14 @@ exports.createCourse = async(req,res)=>{
             instructor:instructorDetails._id,
             whatYouWillLearn,
             price,
-            Category:CategoryDetails._id,
+            //tags:tag,
+            //Category:CategoryDetails._id,
             status:status,
-            thumbnail:thumbnailImage.secure_url,
+            //thumbnail:thumbnailImage.secure_url,
+			instructions: instructions,
 
         })
+        
         //instructor courselist update
         await User.findByIdAndUpdate(
             {_id:instructorDetails._id},
@@ -65,14 +83,14 @@ exports.createCourse = async(req,res)=>{
             },{new:true}
         )
         //Category courselist update
-        await Category.findByIdAndUpdate({
-            _id:CategoryDetails._id,
-        },{
-        $push:{
-                courses:newCourse._id,
-        }
-        },{new:true},
-        );
+        // await Category.findByIdAndUpdate({
+        //     _id:CategoryDetails._id,
+        // },{
+        // $push:{
+        //         courses:newCourse._id,
+        // }
+        // },{new:true},
+        // );
         return res.status(200).json({
             success:true,
             message:"course created succesfully",
