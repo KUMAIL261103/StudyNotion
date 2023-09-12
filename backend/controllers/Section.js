@@ -1,5 +1,6 @@
 const Section = require("../models/Section");
 const Course = require("../models/Course");
+const SubSection = require("../models/SubSection");
 require("dotenv").config();
 exports.createSection = async(req,res)=>{
     try{
@@ -12,9 +13,11 @@ exports.createSection = async(req,res)=>{
                 message:"Details are not sufficient",
             })
         }
+        
         //create section
-        const section = await Section.create({SectionName});
+        const section = await Section.create({sectionName:SectionName});
         //update section into course
+        
         const updatecourse = await Course.findByIdAndUpdate(
             courseID,
             {$push: {
@@ -47,8 +50,8 @@ exports.createSection = async(req,res)=>{
 exports.updateSection = async(req,res)=>{
     try{
         //get data
-        const {newSectionName,sectionID}=req.body;
-
+        const {newSectionName,sectionID,courseId}=req.body;
+        console.log(newSectionName,sectionID,courseId);
         //data validate
         if(!newSectionName || !sectionID){
             return res.status(400).json({
@@ -57,11 +60,17 @@ exports.updateSection = async(req,res)=>{
             })
         }
         //update
-        const updatesection = await Section.findByIdAndUpdate(sectionID,{newSectionName},{new:true});
+        const updatesection = await Section.findByIdAndUpdate(sectionID,{sectionName:newSectionName},{new:true});
+        const course = await Course.findById(courseId).populate({
+            path:"courseContent",
+            populate:{
+                path:"subSection",
+            }}).exec();
+
          return res.status(200).json({
             success:true,
             message:"Section is updated",
-            updatesection,
+            data:course,
         })
     }catch(error){
         console.log(error);
@@ -74,18 +83,36 @@ exports.updateSection = async(req,res)=>{
 }
 exports.deleteSection = async(req,res)=>{
     try{
-        const {sectionID} =req.params || req.body;
+        console.log("request received");
+        const {sectionID,courseId} = req.body;
+        console.log(sectionID,courseId);
         if(!sectionID){
             return res.status(400).json({
                 success:false,
                 message:"Details are not sufficient",
             })
         }
+        await Course.findByIdAndUpdate(courseId, {
+			$pull: {
+				courseContent: sectionID,
+			}
+		})
+        const section = await Section.findById(sectionID);
+		
+        await SubSection.deleteMany({_id: {$in: section.subSection}});
+
         await Section.findByIdAndDelete(sectionID);
+
+        const course = await Course.findById(courseId).populate({
+			path:"courseContent",
+			populate: {
+				path: "subSection"
+			}
+		}).exec();
          return res.status(200).json({
             success:true,
             message:"Section is deleted",
-           
+           data:course,
         })
 
     }catch(error){

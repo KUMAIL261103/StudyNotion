@@ -22,8 +22,8 @@ export default function ChipInput({
 
   useEffect(() => {
     if (editCourse) {
-      // console.log(course)
-      setChips(course?.tag)
+       console.log(course)
+      setChips(course?.tags)
     }
     register(name, { required: true, validate: (value) => value.length > 0 })
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -37,7 +37,7 @@ export default function ChipInput({
   // Function to handle user input when chips are added
   const handleKeyDown = (event) => {
     // Check if user presses "Enter" or ","
-    if (event.key === "Enter" || event.key === ",") {
+    if (event.key === "Enter" || event.key === "," || event.key === "Space") {
       // Prevent the default behavior of the event
       event.preventDefault()
       // Get the input value and remove any leading/trailing spaces
@@ -69,7 +69,7 @@ export default function ChipInput({
       {/* Render the chips and input */}
       <div className="flex w-full flex-wrap gap-y-2">
         {/* Map over the chips array and render each chip */}
-        {chips.map((chip, index) => (
+        { chips && chips.map((chip, index) => (
           <div
             key={index}
             className="m-1 flex items-center rounded-full bg-yellow-400 px-2 py-1 text-sm text-richblack-5"
@@ -93,7 +93,7 @@ export default function ChipInput({
           type="text"
           placeholder={placeholder}
           onKeyDown={handleKeyDown}
-          className="form-style w-full  bg-richblack-700 h-10 rounded-md"
+          className="form-style w-full pl-4 text-richblack-50 bg-richblack-700 h-10 rounded-md"
         />
       </div>
       {/* Render an error message if the input is required and not filled */}

@@ -46,7 +46,7 @@ export const fetchCourseDetails = async (courseId) => {
   //   dispatch(setLoading(true));
   let result = null
   try {
-    const response = await apiConnector("POST", COURSE_DETAILS_API, {
+    const response = await apiConnector("GET", COURSE_DETAILS_API, {
       courseId,
     })
     console.log("COURSE_DETAILS_API API RESPONSE............", response)
@@ -144,7 +144,8 @@ export const createSection = async ({SectionName,courseID}, token) => {
       throw new Error("Could Not Create Section")
     }
     toast.success("Course Section Created")
-    result = response?.data?.updatedCourse
+    result = response?.data?.updatecourse
+    // console.log("result is thiiisss", response.data.updatecourse)
   } catch (error) {
     console.log("CREATE SECTION API ERROR............", error)
     toast.error(error.message)
@@ -156,6 +157,7 @@ export const createSection = async ({SectionName,courseID}, token) => {
 // create a subsection
 export const createSubSection = async (data, token) => {
   let result = null
+  console.log("create subsection data", data);
   const toastId = toast.loading("Loading...")
   try {
     const response = await apiConnector("POST", CREATE_SUBSECTION_API, data, {
@@ -200,6 +202,7 @@ export const updateSection = async (data, token) => {
 // update a subsection
 export const updateSubSection = async (data, token) => {
   let result = null
+  console.log("update subsection data", data);
   const toastId = toast.loading("Loading...")
   try {
     const response = await apiConnector("POST", UPDATE_SUBSECTION_API, data, {
@@ -222,9 +225,10 @@ export const updateSubSection = async (data, token) => {
 // delete a section
 export const deleteSection = async (data, token) => {
   let result = null
+  // console.log("here is data ",data);
   const toastId = toast.loading("Loading...")
   try {
-    const response = await apiConnector("POST", DELETE_SECTION_API, data, {
+    const response = await apiConnector("DELETE", DELETE_SECTION_API, data, {
       Authorization: `Bearer ${token}`,
     })
     console.log("DELETE SECTION API RESPONSE............", response)
@@ -265,6 +269,7 @@ export const deleteSubSection = async (data, token) => {
 // fetching all courses under a specific instructor
 export const fetchInstructorCourses = async (token) => {
   let result = []
+  console.log("token is ....", token)
   const toastId = toast.loading("Loading...")
   try {
     const response = await apiConnector(
@@ -310,6 +315,8 @@ export const deleteCourse = async (data, token) => {
 // get full details of a course
 export const getFullDetailsOfCourse = async (courseId, token) => {
   const toastId = toast.loading("Loading...")
+  console.log("course id is ", courseId)
+  console.log("token is......this  ", token)
   //   dispatch(setLoading(true));
   let result = null
   try {

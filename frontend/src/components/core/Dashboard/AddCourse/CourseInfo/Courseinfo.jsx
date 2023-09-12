@@ -57,10 +57,10 @@ const CourseInformationForm = () => {
             currentValues.courseShortDesc !== course.courseDescription ||
             currentValues.coursePrice !== course.price ||
             currentValues.courseTitle !== course.courseName ||
-            //currentValues.courseTags.toString() !== course.tag.toString() ||
+            currentValues.courseTags.toString() !== course.tag.toString() ||
             currentValues.courseBenefits !== course.whatYouWillLearn ||
             currentValues.courseCategory._id !== course.category._id ||
-            //currentValues.courseImage !== course.thumbnail ||
+            currentValues.courseImage !== course.thumbnail ||
             currentValues.courseRequirements.toString() !== course.instructions.toString() )
             return true;
         else
@@ -99,6 +99,7 @@ const CourseInformationForm = () => {
             if(currentValues.courseRequirements.toString() !== course.instructions.toString()) {
                 formData.append("instructions", JSON.stringify(data.courseRequirements));
             }
+            
 
             setLoading(true);
             try{
@@ -126,6 +127,8 @@ const CourseInformationForm = () => {
         const formData = new FormData();
         //console.log("data.courseTitle:", data.courseTitle);
         formData.append("courseName", data.courseTitle);
+        formData.append("tag", JSON.stringify(data.courseTags));
+        formData.append("thumbnail", data.courseImage);
         //console.log("formData.courseName:", formData.get("courseName"));
         // formData.append("courseName", data.courseTitle);
         formData.append("courseDescription", data.courseShortDesc);
@@ -184,13 +187,13 @@ const CourseInformationForm = () => {
                     }
             </div>
             <div className="relative ">
-                <label htmlFor="coursePrice" className=" w-full text-sm font-medium text-richblack-25">
+                <label htmlFor="coursePrice" className=" w-full text-sm font-medium  text-richblack-25">
                 Course Price<sup className="text-yellow-5">*</sup>
                 </label>
                 
                 <input type="number" name="coursePrice" id="coursePrice"
                     placeholder="Course Price"
-                    className="w-full rounded-md border-richblack-700 bg-richblack-700 p-2 text-richblack-50"
+                    className="w-full rounded-md pl-7 border-richblack-700 placeholder-translate-x-5 bg-richblack-700 p-2 text-richblack-50"
                     {...register
                         ("coursePrice",{
                         required:true,
@@ -198,7 +201,7 @@ const CourseInformationForm = () => {
                         })}
                 />
 
-                <HiOutlineCurrencyRupee className="text-yellow-5 absolute top-9"/>
+                <HiOutlineCurrencyRupee className="text-yellow-5 absolute top-9 left-2"/>
                     {
                         errors.coursePrice && <p className="text-yellow-25">Course Price is required</p>
                     }
@@ -246,6 +249,7 @@ const CourseInformationForm = () => {
                 setValue={setValue}
                 errors={errors}
                 editData={editCourse ? course?.thumbnail : null}
+                viewData={course?.thumbnail || null}
             />
             <div>
                 <label htmlFor="courseBenefits" className=" w-full text-sm font-medium text-richblack-25">
@@ -270,17 +274,19 @@ const CourseInformationForm = () => {
             setValue={setValue}
             getValue={getValues}
             />
+            <div className="flex justify-end gap-3 mr-8">
             {
                 editCourse &&
-                <button
+                <button className="text-center px-5 py-2 hover:scale-95 transition-all duration-200 text-[16px] rounded-md font-bold
+                bg-richblack-900 text-white"
                  onClick={()=>dispatch(setStep(2))}
                 >
                     Continue without saving</button>
             }
-            <button type="submit" className="text-center px-5 py-1 text-[16px] rounded-md font-bold
+            <button type="submit" className="text-center px-5 py-1 text-[16px] hover:scale-95 transition-all duration-200 rounded-md font-bold
                 bg-yellow-50 text-black ">{!editCourse?"Next": "Save Changes"}</button>
 
-
+            </div>
             </form>
 
     </div> );
