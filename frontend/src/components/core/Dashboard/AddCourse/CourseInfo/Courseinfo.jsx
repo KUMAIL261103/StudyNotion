@@ -27,14 +27,17 @@ const CourseInformationForm = () => {
     const [courseCategories, setCourseCategories] = useState([]);
 
     useEffect(()=> {
-        const getCategories = async() => {
-            setLoading(true);
-            const categories = await fetchCourseCategories();
-            if(categories.length > 0) {
-                setCourseCategories(categories);
-            }
-            setLoading(false);
-        }
+        // const getCategories = async() => {
+        //     setLoading(true);
+        //     const categories = await fetchCourseCategories();
+        //     if(categories.length > 0) {
+        //         setCourseCategories(categories);
+        //     }
+        //     setLoading(false);
+        // }
+        //get sublinks from localstorage
+        const sublinks = JSON.parse(localStorage.getItem("sublinks"));
+        setCourseCategories(sublinks);
 
         if(editCourse) {
             setValue("courseTitle", course.courseName);
@@ -47,7 +50,7 @@ const CourseInformationForm = () => {
             setValue("courseImage", course.thumbnail);
         }
 
-        getCategories();
+        //getCategories();
         // eslint-disable-next-line react-hooks/exhaustive-deps
     },[])
     
@@ -126,6 +129,7 @@ const CourseInformationForm = () => {
     
         const formData = new FormData();
         //console.log("data.courseTitle:", data.courseTitle);
+        console.log("data", data    );
         formData.append("courseName", data.courseTitle);
         formData.append("tag", JSON.stringify(data.courseTags));
         formData.append("thumbnail", data.courseImage);
@@ -218,7 +222,7 @@ const CourseInformationForm = () => {
                     )}>
                    
                     <option value="" disabled>Select Category</option>
-                    <option value="Web Development">Web Development</option>    
+                       
                     {!loading && courseCategories.map((item,index) => 
                     {
                         return(

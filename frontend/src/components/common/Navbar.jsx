@@ -21,6 +21,12 @@ const Navbar = () => {
         try{
             const result = await apiConnector("GET", categories.CATEGORIES_API);
             console.log("Printing Sublinks result:" , result);
+            //add result.data.data to localstorage it is array of objects
+            //add result.data.data into session storage
+            if(localStorage.getItem("sublinks")){
+                localStorage.removeItem("sublinks");
+            }
+            localStorage.setItem("sublinks",JSON.stringify(result.data.data));
             setssubLinks(result.data.data);
         }
         catch(error) {
@@ -66,7 +72,7 @@ const Navbar = () => {
                                             <div className="z-10  bottom-[20%] w-4 h-4  rotate-45 flex justify-center items-center   bg-richblack-5 
                                             sm:right-[2rem] sm:translate-y-[-10%] lg:w-[1rem] sm:w-[2rem]">
                                             </div> */}
-                                        <div className='invisible absolute left-[50%]
+                                        {/* <div className='invisible absolute left-[50%]
                                             translate-x-[-50%] translate-y-[80%]
                                         top-[50%]
                                         flex flex-col rounded-md z-10 bg-richblack-5 p-4 text-richblack-900
@@ -76,13 +82,16 @@ const Navbar = () => {
                                             <div className='absolute left-[50%] top-0 
                                             translate-x-[80%] 
                                             translate-y-[-45%] h-4 w-4 rotate-45 rounded bg-richblack-5 sm:p-1'>
-                                            </div>
+                                            </div> */}
+                                        <div className='invisible absolute left-1/2 -translate-x-1/2 translate-y-[-2%] top-full flex flex-col rounded-md z-20 bg-richblack-5 p-1 text-richblack-900 opacity-0 transition-all duration-200 group-hover:visible group-hover:opacity-100 lg:w-[200px] sm:w-[150px]'>
+
+                                                <div className='absolute left-[60%] top-0 -translate-x-1/2 translate-y-[-2%] h-4 w-4 rotate-45 rounded-sm bg-richblack-5 sm:p-1'></div>
 
                                             {
                                                  (ssubLinks.length)?
                                                    (ssubLinks.map((element, index) => (
-                                                        <Link to={element.link} key={index} className="z-20 text-sm rounded-md hover:bg-richblack-50">
-                                                            <p >{element.name}</p>
+                                                        <Link to={`/catalog/${element.name}`} key={index} className="z-20 text-sm   rounded-md hover:bg-richblack-50 w-full p-1">
+                                                            <p className="font-inter">{element.name}</p>
                                                         </Link>
                                                     ))):(<></>)
                                                  

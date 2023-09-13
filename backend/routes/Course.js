@@ -17,6 +17,7 @@ const {
     createCategory,
     getAllCategorys,
     getcategorydetails,
+    categoryPageDetails,
 } = require("../controllers/Category");
 
 //section controllers
@@ -60,7 +61,7 @@ router.post("/updateSection",auth,isInstructor,updateSection);
 router.post("/createSection",auth,isInstructor,createSection);
 
 //category routes
-
+router.post("/categoryPageDetails",categoryPageDetails);
 router.get("/getAllCategories",getAllCategorys);
 router.get("/getcategorydetails",getcategorydetails);
 router.post("/createCategory",auth,isAdmin,createCategory);

@@ -33,6 +33,8 @@ exports.createCourse = async(req,res)=>{
         }
          const _tag = JSON.parse(tag)
          const _instructions = JSON.parse(instructions);
+         console.log(_instructions);
+         console.log(_tag);
          if(!courseName || !courseDescription  ||!tag 
              || !whatYouWillLearn || !price || !category){
             return res.status(401).json({
@@ -57,13 +59,13 @@ exports.createCourse = async(req,res)=>{
                 })
         }
         //Category validation
-        // const CategoryDetails = await Category.findById({_id : Categoryid});
-        // if(!CategoryDetails){
-        //         return res.status(404).json({
-        //             success:false,
-        //             message:"Category not found"
-        //         })
-        // }
+        const CategoryDetails = await Category.findById(category);
+        if(!CategoryDetails){
+                return res.status(404).json({
+                    success:false,
+                    message:"Category not found"
+                })
+        }
         //Upload Image to Cloudinary
         const thumbnailImage = await uploadFileToCloudinary(thumbnail,process.env.FOLDER_NAME);
         //create an entry for new course
@@ -75,7 +77,7 @@ exports.createCourse = async(req,res)=>{
             whatYouWillLearn,
             price,
             tags:_tag,
-            //Category:CategoryDetails._id,
+            Category:CategoryDetails._id,
             status:status,
             thumbnail:thumbnailImage.secure_url,
 			      instructions:_instructions,
@@ -92,14 +94,14 @@ exports.createCourse = async(req,res)=>{
             },{new:true}
         )
         //Category courselist update
-        // await Category.findByIdAndUpdate({
-        //     _id:CategoryDetails._id,
-        // },{
-        // $push:{
-        //         courses:newCourse._id,
-        // }
-        // },{new:true},
-        // );
+        await Category.findByIdAndUpdate({
+            _id:CategoryDetails._id,
+        },{
+        $push:{
+                course:newCourse._id,
+        }
+        },{new:true},
+        );
         return res.status(200).json({
             success:true,
             message:"course created succesfully",

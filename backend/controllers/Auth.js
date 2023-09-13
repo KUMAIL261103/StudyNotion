@@ -30,19 +30,19 @@ exports.sendOtp = async (req, res) => {
         });
         console.log("otp generated :", otp);
         //check unique otp or not
-        const result = await OTP.findOne({ otp: otp });
-        while (result) {
-            otp = otpgenerator.generate(6, {
-                upperCaseAlphabets: false,
-                lowerCaseAlphabets: false,
-                specialChars: false,
-            });
-            result = await OTP.findOne({ otp: otp });
-        }
+        // const result = await OTP.findOne({ otp: otp });
+        // while (result) {
+        //     otp = otpgenerator.generate(6, {
+        //         upperCaseAlphabets: false,
+        //         lowerCaseAlphabets: false,
+        //         specialChars: false,
+        //     });
+        //     result = await OTP.findOne({ otp: otp });
+        // }
         const otppayload = { email, otp };
         //create an entry in db
         const otpBody = await OTP.create(otppayload);
-        console.log(otpBody);
+        console.log("otpbodyyy..",otpBody);
         //return response successfully
         res.status(200).json({
             success: true,
@@ -125,7 +125,7 @@ exports.signUp = async (req, res) => {
         //         message:"Otp is not valid , try again",
         //     })
         // }
-        const response = await OTP.find({ email })
+        const response = await OTP.findOne({email})
             .sort({ createdAt: -1 })
             .limit(1);
         console.log("email response ..", response);
@@ -135,7 +135,7 @@ exports.signUp = async (req, res) => {
                 success: false,
                 message: "The OTP is not found",
             });
-        } else if (otp !== response[0].otp) {
+        } else if (otp !== response.otp) {
             // Invalid OTP
             return res.status(400).json({
                 success: false,

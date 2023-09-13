@@ -6,7 +6,14 @@ require("dotenv").config();
 exports.auth = async(req,res,next)=>{
     try{
         //extract token
-        const  token = req.cookies.token || req.body.token || req.header("Authorization").replace("Bearer ","");
+
+        //const  token = req.cookies.token || req.body.token || req.header("Authorization").replace("Bearer ","");
+        let token = req.cookies.token || req.body.token || "";
+
+        // Check if the "Authorization" header is present
+        if (req.headers.authorization) {
+            token = req.headers.authorization.replace("Bearer ", "");
+        }
         if(!token){
             return res.status(401).json({
                 success:false,
@@ -30,6 +37,7 @@ exports.auth = async(req,res,next)=>{
     }catch(error){
         res.status(401).json({
             success:false,
+            error:error.message,
             message:"Something went wrong while validating jwt"
         });
 
