@@ -6,7 +6,9 @@ const {
     signUp,
     login,
     changePassword,
+
 }= require("../controllers/Auth");
+const { contactUsController   }=require("../controllers/Contactus");
 
 const {
     resetPasswordtoken,
@@ -31,4 +33,7 @@ router.post("/reset-password-token", resetPasswordtoken)
 
 // Route for resetting user's password after verification
 router.post("/reset-password", resetPassword)
+
+//Contact response route
+router.post("/contact",contactUsController);
 module.exports = router;

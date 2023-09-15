@@ -22,7 +22,8 @@ import { ACCOUNT_TYPE } from "./utils/constants";
 import { useSelector } from "react-redux";
 import MyCourses from "./components/core/Dashboard/MyCourses";
 import EditCourse from "./components/core/Dashboard/EditCourse";
-import Categorypage from "./pages/Categorypage";
+import Categorypage from "././components/core/Catalog/Categorypage";
+import CourseDetails from "./components/core/Catalog/CourseDetails";
 function App() {
    const { user } = useSelector((state) => state.profile)
 
@@ -33,7 +34,7 @@ function App() {
       <Routes>
         <Route path="/" element={<Home/>}/>
        <Route path="/catalog/:catalogName" element={<Categorypage/>}/>
-        
+        <Route path="courses/:courseId" element={<CourseDetails/>} />
         <Route path="/login" element=
         {<OpenRoute>
         <Login/>

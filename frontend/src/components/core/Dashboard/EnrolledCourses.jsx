@@ -5,17 +5,17 @@ import { useSelector } from "react-redux";
 import  {getenrolledcourses}  from "../../../services/operations/profileAPI";
 import Spinner from "../../common/Spinner";
 
-
 const EnrolledCourses = () => {
     const {token} = useSelector((state)=>state.auth);
+
     const [enrolledcourses,setEnrolledCourses] = useState(null);
     const getenrolledCourses = async()=>{
         try{
-          
+          //console.log("First");
             const response = await getenrolledcourses(token);
-            
+            //console.log("second");
             console.log(response);
-            setEnrolledCourses(response);
+            setEnrolledCourses(response.data);
 
         }catch(error){
             console.log(error);
@@ -24,10 +24,9 @@ const EnrolledCourses = () => {
         }
     }
     useEffect(()=>{
-        
         getenrolledCourses();
         // eslint-disable-next-line
-    },[token])
+    },[])
     return ( 
     <div >
         <div>Enrolled Courses</div>
