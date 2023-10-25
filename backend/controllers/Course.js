@@ -161,7 +161,7 @@ exports.editCourse = async (req, res) => {
     if (req.files) {
       console.log("thumbnail update")
       const thumbnail = req.files.thumbnailImage
-      const thumbnailImage = await uploadImageToCloudinary(
+      const thumbnailImage = await uploadFileToCloudinary(
         thumbnail,
         process.env.FOLDER_NAME
       )
@@ -217,14 +217,19 @@ exports.editCourse = async (req, res) => {
 //getcoursedetails
 exports.getcoursedetails = async(req,res)=>{
     try{
-    const {courseId} = req.body;
-    if(!courseId){
+      //extract courseid from headers
+
+
+
+    const CourseId = req.header("CourseId");
+    //console.log(CourseId);
+    if(!CourseId){
         return res.status(404).json({
             success:false,
             message:"Course ID not form",
         })
     }
-    const getcoursedetails = await Course.findById(courseId)
+    const getcoursedetails = await Course.findById(CourseId)
     .populate({
         path:"instructor",
         populate:{
@@ -235,10 +240,9 @@ exports.getcoursedetails = async(req,res)=>{
     .populate({
         path:"courseContent",
         populate:{
-            path:"Section",
-            populate:{
+            
                 path:"subSection"
-            }
+            
         }
     }).exec();
     	if (getcoursedetails.ratingReviews && getcoursedetails.ratingReviews.length > 0) {
@@ -329,12 +333,12 @@ exports.getFullCourseDetails = async (req, res) => {
       })
     }
 
-    // if (courseDetails.status === "Draft") {
-    //   return res.status(403).json({
-    //     success: false,
-    //     message: `Accessing a draft course is forbidden`,
-    //   });
-    // }
+    if (courseDetails.status === "Draft") {
+      return res.status(403).json({
+        success: false,
+        message: `Accessing a draft course is forbidden`,
+      });
+    }
 
     let totalDurationInSeconds = 0
     courseDetails.courseContent.forEach((content) => {

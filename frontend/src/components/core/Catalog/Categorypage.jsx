@@ -75,11 +75,13 @@ const Categorypage = () => {
               <p className="text-sm text-richblack-300">
                 {`Home / Catalog / `}
                 <span className="text-yellow-25">
-                  {catalogPageData?.data?.selectedCategory?.name}
+                  {/* {catalogPageData?.data?.selectedCategory?.name} */}
+                  {catalogName }
                 </span>
               </p>
               <p className="text-white mb-4 font-medium leading-6 tracking-tighter text-4xl">
-                {catalogPageData?.data?.selectedCategory?.name}
+                {/* {catalogPageData?.data?.selectedCategory?.name} */}
+                {catalogName}
               </p>
               <p className="max-w-[870px] text-richblack-200">
                 {catalogPageData?.data?.selectedCategory?.description}
@@ -131,18 +133,20 @@ const Categorypage = () => {
           </div> 
     
           {/* Section 3 */}
-          <div className=" mx-auto box-content w-full max-w-maxContentTab px-4 py-12 lg:max-w-maxContent">
+          {/* <div className=" mx-auto box-content w-full max-w-maxContentTab px-4 py-12 lg:max-w-maxContent">
             <div className="section_heading ">Frequently Bought</div>
             <div className="py-8">
               <div className="grid grid-cols-1 gap-6 lg:grid-cols-2">
-                {catalogPageData?.data?.mostSellingCourse
+                {catalogPageData?.data?.mostSellingCourse?.length===0?
+                (<p className="text-xl text-richblack-5">No Course Found</p>):
+                catalogPageData?.data?.mostSellingCourse
                   ?.slice(0, 4)
                   .map((course, i) => (
                     <CourseCard course={course} key={i} Height={"h-[400px]"} />
                   ))}
               </div>
             </div>
-          </div> 
+          </div>  */}
      
           <Footer />
         </>

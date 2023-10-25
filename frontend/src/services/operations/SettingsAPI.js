@@ -43,11 +43,13 @@ export function updateDisplayPicture(token, formData) {
   }
 }
 
-export async function updateProfile(token, formData) {
+export  function updateProfile(token, data) {
   return async (dispatch) => {
     const toastId = toast.loading("Loading...")
+    console.log("update proffile dataa",data);
+    console.log("tokoken",token);
     try {
-      const response = await apiConnector("PUT", UPDATE_PROFILE_API, formData, {
+      const response = await apiConnector("PUT", UPDATE_PROFILE_API, data, {
         Authorization: `Bearer ${token}`,
       })
       console.log("UPDATE_PROFILE_API API RESPONSE............", response)
@@ -55,11 +57,12 @@ export async function updateProfile(token, formData) {
       if (!response.data.success) {
         throw new Error(response.data.message)
       }
-      const userImage = response.data.updatedUserDetails.image
-        ? response.data.updatedUserDetails.image
-        : `https://api.dicebear.com/5.x/initials/svg?seed=${response.data.updatedUserDetails.firstName} ${response.data.updatedUserDetails.lastName}`
+      console.log("initiallls",)
+      const userImage = response.data.existUser?.image
+        ? response.data.existUser.image
+        : `https://api.dicebear.com/5.x/initials/svg?seed=${response.data.existUser.firstName} ${response.data.existUser.lastName}`
       dispatch(
-        setUser({ ...response.data.updatedUserDetails, image: userImage })
+        setUser({ ...response.data.existUser, image: userImage })
       )
       toast.success("Profile Updated Successfully")
     } catch (error) {

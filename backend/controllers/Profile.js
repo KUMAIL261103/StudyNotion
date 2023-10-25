@@ -1,7 +1,8 @@
 const Profile = require("../models/Profile");
 const User = require("../models/User");
 const Course = require("../models/Course")
-const {uploadFileToCloudinary} = "../utils/FileUploader.js"
+//const {uploadFileToCloudinary} = "../utils/FileUploader.js"
+const { uploadFileToCloudinary } = require("../utils/FileUploader");
 exports.updateProfile = async(req,res)=>{
     try{
         //get data
@@ -25,6 +26,7 @@ exports.updateProfile = async(req,res)=>{
         }
         const profileId = existUser.additionalDetails._id;
         const existProfile = await Profile.findById(profileId);
+        // let updatedProfiledata;
         if(!existProfile){
             return res.status(404).json({
                 success:false,
@@ -32,6 +34,10 @@ exports.updateProfile = async(req,res)=>{
             })
         }
         //update profile
+        
+        if(lastName){
+
+        }
         if(gender){
             existProfile.gender = gender;
         }
@@ -44,12 +50,15 @@ exports.updateProfile = async(req,res)=>{
         if(contactNumber){
             existProfile.contactNumber = contactNumber;
         }
-        try{const updateProfile  = await existProfile.save();}
+        try{ 
+           await existProfile.save();
+        }
         catch(er){
 			console.log(er);
 			return res.status(400).json({
 			success: false,
 			error: error.message,
+      
 		});
 
 		}
@@ -57,7 +66,9 @@ exports.updateProfile = async(req,res)=>{
         return res.status(200).json({
             success:true,
             message:"Profile updated",
-            updateProfile,
+            // updatedProfiledata
+            updatedProfiledata:existProfile,
+            existUser:existUser
         })
         
 
@@ -150,16 +161,16 @@ exports.updateDisplayPicture = async (req, res) => {
         1000,
         1000
       )
-      console.log(image)
-      const updatedProfile = await User.findByIdAndUpdate(
+      //console.log(image)
+      const existUser= await User.findByIdAndUpdate(
         { _id: userId },
         { image: image.secure_url },
         { new: true }
       )
-      res.send({
+      return res.send({
         success: true,
         message: `Image Updated successfully`,
-        data: updatedProfile,
+        data: existUser,
       })
     } catch (error) {
 		console.log(error);
@@ -173,7 +184,17 @@ exports.getEnrolledCourses = async (req, res) => {
     try {
       const userId = req.user.id
       //console.log(userId)
-      const userDetails = await User.findById(userId).populate("courses").exec()
+      const userDetails = await User.findById(userId)
+      .populate({
+        path: "courses",
+        populate: {
+          path: "courseContent",
+          populate: {
+            path: "subSection",
+          },
+        },
+      })
+      .exec()
       //console.log(userDetails);  
       if (!userDetails) {
         return res.status(400).json({

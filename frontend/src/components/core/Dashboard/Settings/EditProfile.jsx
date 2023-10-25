@@ -20,9 +20,11 @@ export default function EditProfile() {
   } = useForm()
 
   const submitProfileForm = async (data) => {
-    // console.log("Form Data - ", data)
+    console.log("Form Data - ", data)
     try {
-      dispatch(updateProfile(token, data))
+       dispatch(updateProfile(token, data));
+      
+
     } catch (error) {
       console.log("ERROR MESSAGE - ", error.message)
     }
@@ -46,8 +48,8 @@ export default function EditProfile() {
                 id="firstName"
                 placeholder="Enter first name"
                   className="w-full rounded-[0.5rem] bg-richblack-800 p-[12px] text-richblack-100 font-normal"
-         
-                {...register("firstName", { required: true })}
+                disabled
+                //{...register("firstName", { required: true })}
                 defaultValue={user?.firstName}
               />
               {errors.firstName && (
@@ -66,8 +68,8 @@ export default function EditProfile() {
                 id="lastName"
                 placeholder="Enter first name"
                 className="w-full rounded-[0.5rem] bg-richblack-800 p-[12px] text-richblack-100 font-normal"
-         
-                {...register("lastName", { required: true })}
+                disabled
+                //{...register("lastName", { required: true })}
                 defaultValue={user?.lastName}
               />
               {errors.lastName && (
