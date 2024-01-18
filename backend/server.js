@@ -9,7 +9,7 @@ const courseRoutes  =require("./routes/Course");
 const cors = require("cors");
 const cookieParser = require("cookie-parser");
 const fileUpload = require("express-fileupload");
-const port = process.env.PORT || 3000;
+const port = process.env.PORT || 4000;
 const db = require("./config/database");
 const cloudinary = require("./config/Cloudinary");
 
@@ -17,7 +17,7 @@ const cloudinary = require("./config/Cloudinary");
 app.use(cookieParser());
 app.use(
 	cors({
-		origin:"http://localhost:3000",
+		origin:"*",
 		credentials:true,
 	})
 )

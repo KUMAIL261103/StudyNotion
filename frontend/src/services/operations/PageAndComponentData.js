@@ -24,9 +24,9 @@ export const  getCategoryPageData = async(categoryId) => {
     }
 
     } catch (error) {
-        toast.error("Something went wrong");
-        console.log("Catalog page error...",error);
-        result = error?.response?.data;
+        // toast.error("Something went wrong");
+        // console.log("Catalog page error...",error);
+        // result = error?.response?.data;
     }
     toast.dismiss(toastId);
     return result;

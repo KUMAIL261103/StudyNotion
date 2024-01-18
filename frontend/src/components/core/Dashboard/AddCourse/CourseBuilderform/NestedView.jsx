@@ -18,9 +18,9 @@ const NestedView = ({handleChangeEditSectionName}) => {
     const  [viewSubSection, setViewSubSection] = useState(null);
     const [editSubSection, setEditSubSection] = useState(null);
     const [confirmationModal, setConfirmationModal] = useState(null);
-    useEffect(()=>{
-        // console.log("nested component-->",course);
-    });
+    // useEffect(()=>{
+    //     // console.log("nested component-->",course);
+    // });
     const handleDeleteSection = async(sectionId,courseId) => {
         const result = await deleteSection(
         {
