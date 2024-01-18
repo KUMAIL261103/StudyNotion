@@ -8,7 +8,7 @@ import RatingStars from '../../common/RatingStars'
 import { useState ,useEffect} from 'react';
 import GetAvgRating from "../../../utils/avgRating"
 import {formatDate} from "../../../utils/formatDate"
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { useNavigate, useParams } from 'react-router-dom';
 import { buyCourse } from '../../../services/operations/paymentapi';
 import {fetchCourseDetails} from "../../../services/operations/course"
@@ -62,6 +62,7 @@ const CourseDetails = () => {
         // eslint-disable-next-line
     },[courseId])
     const [durration, setduration] = useState(0);
+    console.log(durration);
     useEffect(()=>{
          let lectures = 0;
          let durationlec = 0;
@@ -81,14 +82,14 @@ const CourseDetails = () => {
         setAverageReviewCount(count);
     },[courseData])
     const [isActive, setIsActive] = useState(Array(0));
-    const handleActive = (id) => {
-        setIsActive(
-            !isActive.includes(id)
-             ? isActive.concat(id)
-             : isActive.filter((e)=> e !== id)
+    // const handleActive = (id) => {
+    //     setIsActive(
+    //         !isActive.includes(id)
+    //          ? isActive.concat(id)
+    //          : isActive.filter((e)=> e !== id)
 
-        )
-    }
+    //     )
+    // }
      const {
         //_id,
         courseName,

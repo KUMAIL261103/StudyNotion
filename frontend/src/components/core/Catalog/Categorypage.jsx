@@ -1,11 +1,11 @@
 import Footer from "../../common/Footer";
 import CourseSlider from "../../common/CourseSlider";
 import {useParams }from "react-router-dom";
-import { apiConnector } from "../../../services/apiconnector";
+// import { apiConnector } from "../../../services/apiconnector";
 import { useSelector } from "react-redux";
 import Error from "../../../pages/Error";
-import CourseCard from "./CourseCard"
-import {courseEndpoints ,categories} from "../../../services/apis";
+// import CourseCard from "./CourseCard"
+// import {courseEndpoints ,categories} from "../../../services/apis";
 import { getCategoryPageData } from "../../../services/operations/PageAndComponentData";
 import { useEffect, useState } from "react";
 const Categorypage = () => {
